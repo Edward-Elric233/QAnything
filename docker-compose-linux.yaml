@@ -76,6 +76,24 @@ services:
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/mysql:/var/lib/mysql
 
+  web:
+    container_name: qanything-web-container
+    image: edwardelric233/qanything-web
+    command: /bin/bash -c '/workspace/qanything_local/scripts/run_for_web.sh; while true; do sleep 5; done'
+    privileged: true
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/:/workspace/qanything_local/
+    ports:
+      - "5052:5052"
+      - "8777:8777"
+    environment:
+      - USER_IP=${USER_IP:-localhost}
+    depends_on:
+      - "mysql"
+      - "standalone"
+    tty: true
+    stdin_open: true
+
   qanything_local:
     container_name: qanything-container-local
     image: freeren/qanything:v1.2.1
@@ -95,9 +113,6 @@ services:
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/assets/custom_models:/model_repos/CustomLLM
       - ${DOCKER_VOLUME_DIRECTORY:-.}/:/workspace/qanything_local/
-    ports:
-      - "5052:5052"
-      - "8777:8777"
     environment:
       - NCCL_LAUNCH_MODE=PARALLEL
       - GPUID1=${GPUID1:-0}
@@ -105,10 +120,11 @@ services:
       - MODEL_SIZE=${MODEL_SIZE:-0B}
       - USER_IP=${USER_IP:-localhost}
     depends_on:
-      - "standalone"
-      - "mysql"
+      - "web"
     tty: true
     stdin_open: true
+
+
 
 networks:
   default:
