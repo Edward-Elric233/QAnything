@@ -25,3 +25,5 @@ front_end/components.d.ts
 front_end/stats.html
 front_end/version.txt
 tmp_files/
+assets/custom_models/
+third_party

@@ -1,0 +1,24 @@
+services:
+    qanything:
+        container_name: qanything-container
+        image: edwardelric233/qanything
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                      - driver: nvidia
+                        count: "all"
+                        capabilities: ["gpu"]
+        privileged: true
+        shm_size: '8gb'
+        volumes:
+          - ${DOCKER_VOLUME_DIRECTORY:-.}/assets/custom_models:/model_repos/CustomLLM
+          - ${DOCKER_VOLUME_DIRECTORY:-.}/:/workspace/qanything_local/
+        environment:
+          - NCCL_LAUNCH_MODE=PARALLEL
+          - GPUID1=${GPUID1:-0}
+          - GPUID2=${GPUID2:-0}
+          - MODEL_SIZE=${MODEL_SIZE:-0B}
+          - USER_IP=${USER_IP:-localhost}
+        tty: true
+        stdin_open: true
