@@ -11,6 +11,9 @@ services:
                         capabilities: ["gpu"]
         privileged: true
         shm_size: '8gb'
+        ports:
+            - "5052:5052"
+            - "8777:8777"
         volumes:
           - ${DOCKER_VOLUME_DIRECTORY:-.}/assets/custom_models:/model_repos/CustomLLM
           - ${DOCKER_VOLUME_DIRECTORY:-.}/:/workspace/qanything_local/

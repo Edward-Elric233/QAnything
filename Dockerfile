@@ -45,4 +45,4 @@ ENV TIKTOKEN_CACHE_DIR=/opt/tiktoken_cache
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir -e .
-
+ENTRYPOINT ["qanything-server"]
