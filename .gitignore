@@ -27,3 +27,5 @@ front_end/version.txt
 tmp_files/
 assets/custom_models/
 milvus_data
+third_party
+qanything.egg-info

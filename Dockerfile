@@ -1,10 +1,10 @@
 ARG PIP_OPTIONS="-i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn"
-FROM opencloudos/opencloudos:8.6
+FROM opencloudos/opencloudos:8.8
 
 # 设置非交互式前端，防止在安装过程中出现交云提示
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN dnf update -y && dnf install -y wget tar gcc zlib zlib-devel bzip2 bzip2-devel ncurses ncurses-devel readline readline-devel openssl openssl-devel xz xz-devel sqlite sqlite-devel gdbm gdbm-devel tk tk-devel mysql-devel libffi-devel make mesa-libGL lsof
+RUN dnf update -y && dnf install -y wget tar gcc zlib zlib-devel bzip2 bzip2-devel ncurses ncurses-devel readline readline-devel openssl openssl-devel xz xz-devel sqlite sqlite-devel gdbm gdbm-devel tk tk-devel mysql-devel libffi-devel make mesa-libGL lsof gzip
 
 RUN mkdir /build && cd /build && wget https://www.python.org/ftp/python/3.10.12/Python-3.10.12.tgz && tar -xvf Python-3.10.12.tgz && cd Python-3.10.12 && ./configure && make all && make install && ln -s /usr/local/bin/python3 /usr/bin/python3 && ln -s /usr/local/bin/pip3 /usr/bin/pip
 

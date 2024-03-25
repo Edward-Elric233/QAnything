@@ -12,7 +12,6 @@ services:
         privileged: true
         shm_size: '8gb'
         ports:
-            - "5052:5052"
             - "8777:8777"
         command: /bin/bash -c 'pip install -e . && bash scripts/run_for_3B_in_Linux_or_WSL.sh'
         volumes:
