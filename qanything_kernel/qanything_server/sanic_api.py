@@ -17,8 +17,7 @@ root_dir = os.path.dirname(parent_dir)
 # 将项目根目录添加到sys.path
 sys.path.append(root_dir)
 
-from qanything_kernel.configs.model_config import MILVUS_LITE_LOCATION, VW_4B_MODEL_PATH, VW_7B_MODEL_PATH, VM_4B_DOWNLOAD_PARAMS, \
-    VM_7B_DOWNLOAD_PARAMS
+from qanything_kernel.configs.model_config import MILVUS_LITE_LOCATION, VW_3B_MODEL_PATH, VW_4B_MODEL_PATH, VW_7B_MODEL_PATH,VM_3B_DOWNLOAD_PARAMS, VM_4B_DOWNLOAD_PARAMS, VM_7B_DOWNLOAD_PARAMS
 import qanything_kernel.configs.model_config as model_config
 from qanything_kernel.utils.custom_log import debug_logger
 from qanything_kernel.utils.general_utils import download_file, get_gpu_memory_utilization, check_package_version
@@ -107,14 +106,17 @@ if not args.use_openai_api:
     if os_system == "Linux":
         args.gpu_memory_utilization = get_gpu_memory_utilization(model_size, args.device_id)
         debug_logger.info(f"GPU memory utilization: {args.gpu_memory_utilization}")
-    if model_size == '4B':
+    if model_size == '3B':
+        args.model = VW_3B_MODEL_PATH
+        model_download_params = VM_3B_DOWNLOAD_PARAMS
+    elif model_size == '4B':
         args.model = VW_4B_MODEL_PATH
         model_download_params = VM_4B_DOWNLOAD_PARAMS
     elif model_size == '7B':
         args.model = VW_7B_MODEL_PATH
         model_download_params = VM_7B_DOWNLOAD_PARAMS
     else:
-        raise ValueError(f"Unsupported model size: {model_size}, supported model size: 4B, 7B")
+        raise ValueError(f"Unsupported model size: {model_size}, supported model size: 3B, 4B, 7B")
 
 # 如果模型不存在, 下载模型
 if args.use_openai_api:

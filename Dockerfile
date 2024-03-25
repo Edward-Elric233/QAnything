@@ -4,17 +4,269 @@ FROM opencloudos/opencloudos:8.6
 # 设置非交互式前端，防止在安装过程中出现交云提示
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN dnf update -y && dnf install -y wget tar gcc zlib zlib-devel bzip2 bzip2-devel ncurses ncurses-devel readline readline-devel openssl openssl-devel xz xz-devel sqlite sqlite-devel gdbm gdbm-devel tk tk-devel mysql-devel libffi-devel make mesa-libGL
+RUN dnf update -y && dnf install -y wget tar gcc zlib zlib-devel bzip2 bzip2-devel ncurses ncurses-devel readline readline-devel openssl openssl-devel xz xz-devel sqlite sqlite-devel gdbm gdbm-devel tk tk-devel mysql-devel libffi-devel make mesa-libGL lsof
 
 RUN mkdir /build && cd /build && wget https://www.python.org/ftp/python/3.10.12/Python-3.10.12.tgz && tar -xvf Python-3.10.12.tgz && cd Python-3.10.12 && ./configure && make all && make install && ln -s /usr/local/bin/python3 /usr/bin/python3 && ln -s /usr/local/bin/pip3 /usr/bin/pip
 
 RUN python3 -m pip install $PIP_OPTIONS --upgrade pip && pip install $PIP_OPTIONS --no-cache-dir --extra-index-url https://pypi.ngc.nvidia.com regex==2023.10.3 fire==0.5.0 && \
-    pip install $PIP_OPTIONS --no-cache-dir --ignore-installed blinker==1.7.0 && \
-    pip install $PIP_OPTIONS --no-cache-dir tqdm==4.66.1 omegaconf==2.3.0 concurrent-log-handler==0.9.25 && \
-    pip install $PIP_OPTIONS --no-cache-dir numpy==1.23.4 transformers==4.31.0 tiktoken==0.4.0 kazoo==2.9.0 psutil==5.9.0 sentencepiece==0.1.99 tritonclient[all]==2.31.0 pynvml==11.5.0 gunicorn==21.2.0 uvicorn==0.25.0 && \
-    pip install $PIP_OPTIONS --no-cache-dir ipython==8.17.2 sanic==23.6.0 pymilvus==2.3.4 langchain==0.0.351 paddleocr==2.7.0.3 paddlepaddle-gpu==2.5.2 nltk==3.8.1 pypinyin==0.50.0 mysql-connector-python==8.2.0 sanic_ext==23.6.0 && \
-    pip install $PIP_OPTIONS --no-cache-dir onnxruntime-gpu==1.16.3 openai==1.6.1 && \
-    pip install $PIP_OPTIONS --no-cache-dir unstructured==0.11.6 unstructured[pptx]==0.11.6 unstructured[md]==0.11.6
+    pip install $PIP_OPTIONS --no-cache-dir accelerate==0.21.0 \
+                                            addict==2.4.0 \
+                                            aiofiles==23.2.1 \
+                                            aiohttp==3.9.3 \
+                                            aiosignal==1.3.1 \
+                                            aliyun-python-sdk-core==2.15.0 \
+                                            aliyun-python-sdk-kms==2.16.2 \
+                                            annotated-types==0.6.0 \
+                                            antlr4-python3-runtime==4.9.3 \
+                                            anyio==4.3.0 \
+                                            argon2-cffi==23.1.0 \
+                                            argon2-cffi-bindings==21.2.0 \
+                                            astor==0.8.1 \
+                                            asttokens==2.4.1 \
+                                            async-timeout==4.0.3 \
+                                            attrdict==2.0.1 \
+                                            attrs==23.2.0 \
+                                            azure-core==1.30.1 \
+                                            azure-storage-blob==12.19.1 \
+                                            Babel==2.14.0 \
+                                            backoff==2.2.1 \
+                                            bce-python-sdk==0.9.5 \
+                                            beautifulsoup4==4.12.3 \
+                                            blinker==1.7.0 \
+                                            Brotli==1.1.0 \
+                                            cachetools==5.3.3 \
+                                            certifi==2024.2.2 \
+                                            cffi==1.16.0 \
+                                            chardet==5.2.0 \
+                                            charset-normalizer==3.3.2 \
+                                            click==8.1.7 \
+                                            cloudpickle==3.0.0 \
+                                            coloredlogs==15.0.1 \
+                                            concurrent-log-handler==0.9.25 \
+                                            contourpy==1.2.0 \
+                                            crcmod==1.7 \
+                                            cryptography==42.0.5 \
+                                            cssselect==1.2.0 \
+                                            cssutils==2.9.0 \
+                                            cupy-cuda12x==12.1.0 \
+                                            cycler==0.12.1 \
+                                            Cython==3.0.9 \
+                                            dataclasses-json==0.6.4 \
+                                            datasets==2.18.0 \
+                                            decorator==5.1.1 \
+                                            deepdiff==6.7.1 \
+                                            dill==0.3.8 \
+                                            diskcache==5.6.3 \
+                                            distro==1.9.0 \
+                                            easyocr==1.7.1 \
+                                            einops==0.7.0 \
+                                            emoji==2.10.1 \
+                                            environs==9.5.0 \
+                                            et-xmlfile==1.1.0 \
+                                            exceptiongroup==1.2.0 \
+                                            executing==2.0.1 \
+                                            fastapi==0.110.0 \
+                                            fastrlock==0.8.2 \
+                                            filelock==3.13.1 \
+                                            filetype==1.2.0 \
+                                            fire==0.5.0 \
+                                            Flask==3.0.2 \
+                                            flask-babel==4.0.0 \
+                                            flatbuffers==24.3.7 \
+                                            fonttools==4.49.0 \
+                                            frozenlist==1.4.1 \
+                                            fsspec==2024.2.0 \
+                                            future==1.0.0 \
+                                            gast==0.5.4 \
+                                            gevent==24.2.1 \
+                                            geventhttpclient==2.0.2 \
+                                            greenlet==3.0.3 \
+                                            grpcio==1.58.0 \
+                                            gunicorn==21.2.0 \
+                                            h11==0.14.0 \
+                                            html5tagger==1.3.0 \
+                                            httpcore==1.0.4 \
+                                            httptools==0.6.1 \
+                                            httpx==0.27.0 \
+                                            huggingface-hub==0.21.4 \
+                                            humanfriendly==10.0 \
+                                            idna==3.6 \
+                                            imageio==2.34.0 \
+                                            imgaug==0.4.0 \
+                                            importlib_metadata==7.1.0 \
+                                            interegular==0.3.3 \
+                                            ipython==8.17.2 \
+                                            isodate==0.6.1 \
+                                            itsdangerous==2.1.2 \
+                                            jedi==0.19.1 \
+                                            Jinja2==3.1.3 \
+                                            jmespath==0.10.0 \
+                                            joblib==1.3.2 \
+                                            jsonpatch==1.33 \
+                                            jsonpath-python==1.0.6 \
+                                            jsonpointer==2.4 \
+                                            jsonschema==4.21.1 \
+                                            jsonschema-specifications==2023.12.1 \
+                                            kazoo==2.9.0 \
+                                            kiwisolver==1.4.5 \
+                                            langchain==0.1.9 \
+                                            langchain-community==0.0.29 \
+                                            langchain-core==0.1.33 \
+                                            langdetect==1.0.9 \
+                                            langsmith==0.1.31 \
+                                            lark==1.1.9 \
+                                            lazy_loader==0.3 \
+                                            llvmlite==0.42.0 \
+                                            lmdb==1.4.1 \
+                                            lxml==5.1.0 \
+                                            Markdown==3.5.2 \
+                                            MarkupSafe==2.1.5 \
+                                            marshmallow==3.21.1 \
+                                            matplotlib==3.8.3 \
+                                            matplotlib-inline==0.1.6 \
+                                            milvus==2.3.5 \
+                                            minio==7.2.5 \
+                                            modelscope==1.13.0 \
+                                            mpmath==1.3.0 \
+                                            msgpack==1.0.8 \
+                                            multidict==6.0.5 \
+                                            multiprocess==0.70.16 \
+                                            mypy-extensions==1.0.0 \
+                                            mysql-connector-python==8.2.0 \
+                                            nest-asyncio==1.6.0 \
+                                            networkx==3.2.1 \
+                                            ninja==1.11.1.1 \
+                                            nltk==3.8.1 \
+                                            numba==0.59.1 \
+                                            numpy==1.24.3 \
+                                            nvidia-cublas-cu12==12.1.3.1 \
+                                            nvidia-cuda-cupti-cu12==12.1.105 \
+                                            nvidia-cuda-nvrtc-cu12==12.1.105 \
+                                            nvidia-cuda-runtime-cu12==12.1.105 \
+                                            nvidia-cudnn-cu12==8.9.2.26 \
+                                            nvidia-cufft-cu12==11.0.2.54 \
+                                            nvidia-curand-cu12==10.3.2.106 \
+                                            nvidia-cusolver-cu12==11.4.5.107 \
+                                            nvidia-cusparse-cu12==12.1.0.106 \
+                                            nvidia-nccl-cu12==2.18.1 \
+                                            nvidia-nvjitlink-cu12==12.4.99 \
+                                            nvidia-nvtx-cu12==12.1.105 \
+                                            omegaconf==2.3.0 \
+                                            onnxruntime-gpu==1.17.1 \
+                                            openai==1.12.0 \
+                                            opencv-contrib-python==4.6.0.66 \
+                                            opencv-python==4.6.0.66 \
+                                            opencv-python-headless==4.9.0.80 \
+                                            openpyxl==3.1.2 \
+                                            opt-einsum==3.3.0 \
+                                            ordered-set==4.1.0 \
+                                            orjson==3.9.15 \
+                                            oss2==2.18.4 \
+                                            outlines==0.0.36 \
+                                            packaging==23.2 \
+                                            paddleocr==2.7.0.3 \
+                                            paddlepaddle-gpu==2.5.2 \
+                                            pandas==2.2.1 \
+                                            parso==0.8.3 \
+                                            pdf2docx==0.5.8 \
+                                            pexpect==4.9.0 \
+                                            pillow==10.2.0 \
+                                            platformdirs==4.2.0 \
+                                            portalocker==2.8.2 \
+                                            premailer==3.10.0 \
+                                            prometheus_client==0.20.0 \
+                                            prompt-toolkit==3.0.43 \
+                                            protobuf==4.21.12 \
+                                            psutil==5.9.0 \
+                                            ptyprocess==0.7.0 \
+                                            pure-eval==0.2.2 \
+                                            pyarrow==15.0.1 \
+                                            pyarrow-hotfix==0.6 \
+                                            pyclipper==1.3.0.post5 \
+                                            pycparser==2.21 \
+                                            pycryptodome==3.20.0 \
+                                            pydantic==2.6.3 \
+                                            pydantic_core==2.16.3 \
+                                            Pygments==2.17.2 \
+                                            pymilvus==2.4.0 \
+                                            PyMuPDF==1.20.2 \
+                                            pynvml==11.5.0 \
+                                            pyparsing==3.1.2 \
+                                            pypdf==4.1.0 \
+                                            pypinyin==0.50.0 \
+                                            python-bidi==0.4.2 \
+                                            python-dateutil==2.9.0.post0 \
+                                            python-docx==1.1.0 \
+                                            python-dotenv==1.0.1 \
+                                            python-iso639==2024.2.7 \
+                                            python-magic==0.4.27 \
+                                            python-pptx==0.6.23 \
+                                            python-rapidjson==1.16 \
+                                            pytz==2024.1 \
+                                            PyYAML==6.0.1 \
+                                            rapidfuzz==3.6.2 \
+                                            rarfile==4.1 \
+                                            ray==2.10.0 \
+                                            referencing==0.34.0 \
+                                            regex==2023.10.3 \
+                                            requests==2.31.0 \
+                                            rpds-py==0.18.0 \
+                                            safetensors==0.4.2 \
+                                            sanic==23.6.0 \
+                                            sanic-ext==23.6.0 \
+                                            sanic-routing==23.12.0 \
+                                            scikit-image==0.22.0 \
+                                            scipy==1.12.0 \
+                                            sentencepiece==0.1.99 \
+                                            shapely==2.0.3 \
+                                            simplejson==3.19.2 \
+                                            six==1.16.0 \
+                                            sniffio==1.3.1 \
+                                            sortedcontainers==2.4.0 \
+                                            soupsieve==2.5 \
+                                            SQLAlchemy==2.0.28 \
+                                            stack-data==0.6.3 \
+                                            starlette==0.36.3 \
+                                            sympy==1.12 \
+                                            tabulate==0.9.0 \
+                                            tenacity==8.2.3 \
+                                            termcolor==2.4.0 \
+                                            tifffile==2024.2.12 \
+                                            tiktoken==0.4.0 \
+                                            tokenizers==0.15.2 \
+                                            tomli==2.0.1 \
+                                            torch==2.1.2 \
+                                            torchvision==0.16.2 \
+                                            tqdm==4.66.1 \
+                                            tracerite==1.1.1 \
+                                            traitlets==5.14.1 \
+                                            transformers==4.38.2 \
+                                            triton==2.1.0 \
+                                            tritonclient==2.31.0 \
+                                            typing-inspect==0.9.0 \
+                                            typing_extensions==4.10.0 \
+                                            tzdata==2024.1 \
+                                            ujson==5.9.0 \
+                                            unstructured==0.12.4 \
+                                            unstructured-client==0.21.1 \
+                                            urllib3==2.2.1 \
+                                            uvicorn==0.25.0 \
+                                            uvloop==0.19.0 \
+                                            visualdl==2.5.3 \
+                                            vllm==0.3.3 \
+                                            watchfiles==0.21.0 \
+                                            wcwidth==0.2.13 \
+                                            websockets==12.0 \
+                                            Werkzeug==3.0.1 \
+                                            wrapt==1.16.0 \
+                                            xformers==0.0.23.post1 \
+                                            XlsxWriter==3.2.0 \
+                                            xxhash==3.4.1 \
+                                            yapf==0.40.2 \
+                                            yarl==1.9.4 \
+                                            zipp==3.18.1 \
+                                            zope.event==5.0 \
+                                            zope.interface==6.2
 
 # Add FT-backend
 
@@ -41,8 +293,3 @@ RUN wget -O /opt/tiktoken_cache/$(echo -n $TIKTOKEN_URL | sha1sum | head -c 40) 
 ENV TIKTOKEN_CACHE_DIR=/opt/tiktoken_cache
 # 启动nginx
 # CMD ["nginx", "-g", "daemon off;"]
-
-COPY . .
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir -e .
-ENTRYPOINT ["qanything-server"]

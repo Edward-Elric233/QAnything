@@ -14,14 +14,15 @@ services:
         ports:
             - "5052:5052"
             - "8777:8777"
+        command: /bin/bash -c 'pip install -e . && bash scripts/run_for_3B_in_Linux_or_WSL.sh'
         volumes:
-          - ${DOCKER_VOLUME_DIRECTORY:-.}/assets/custom_models:/model_repos/CustomLLM
-          - ${DOCKER_VOLUME_DIRECTORY:-.}/:/workspace/qanything_local/
+            - ${DOCKER_VOLUME_DIRECTORY:-.}/assets/custom_models:/model_repos/CustomLLM
+            - ${DOCKER_VOLUME_DIRECTORY:-.}/:/workspace/
         environment:
-          - NCCL_LAUNCH_MODE=PARALLEL
-          - GPUID1=${GPUID1:-0}
-          - GPUID2=${GPUID2:-0}
-          - MODEL_SIZE=${MODEL_SIZE:-0B}
-          - USER_IP=${USER_IP:-localhost}
+            - NCCL_LAUNCH_MODE=PARALLEL
+            - GPUID1=${GPUID1:-0}
+            - GPUID2=${GPUID2:-0}
+            - MODEL_SIZE=${MODEL_SIZE:-0B}
+            - USER_IP=${USER_IP:-localhost}
         tty: true
         stdin_open: true
