@@ -15,8 +15,8 @@ RUN python3 -m pip install $PIP_OPTIONS --upgrade pip && pip install $PIP_OPTION
                                             PyMuPDF==1.20.2 \
                                             easyocr==1.7.1 \
                                             # onnxruntime==1.17.1 \
-                                            transformers==4.38.2 \
-                                            vllm==0.3.3 \
+                                            transformers==4.36.2 \
+                                            # vllm==0.3.3 \
                                             openai==1.12.0 \
                                             concurrent-log-handler==0.9.25 \
                                             sentencepiece==0.1.99 \
