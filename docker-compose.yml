@@ -1,7 +1,7 @@
 services:
     qanything:
         container_name: qanything-container
-        image: edwardelric233/qanything
+        image: edwardelric233/qanything:1.1
         deploy:
             resources:
                 reservations:
